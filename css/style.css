@@ -1,0 +1,35 @@
+:root {
+  /* --board-col: 3; */
+  /* --length: 300px; */
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.container {
+  height: 100dvh;
+  background-color: #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board {
+  background-color: blueviolet;
+  display: grid;
+  grid-template-columns: repeat(var(--board-col), 1fr);
+  grid-template-rows: repeat(var(--board-col), 1fr);
+  width: var(--length);
+  padding: 0.5rem;
+  height: var(--length);
+}
+
+.box {
+  background-color: aqua;
+  padding: 1rem;
+  margin: 0.25rem;
+}
