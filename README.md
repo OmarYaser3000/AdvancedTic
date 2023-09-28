@@ -1,3 +1,10 @@
+## Game Rules
+
+- This is a more strategic version of tic tac toe.
+- You should make a row, column, or a diagonal with your pieces.
+- You can win after all of your pieces are moved at least once.
+-
+
 - I colored the outline of the minimax algorithm just for convenience.
 - I colored the arrows that span long distances just for convenience.
 - The Minimax implementation in the chart represents only the optimal algorithm, for other variations refer to the Minimax section.
