@@ -54,7 +54,6 @@ const playerOne = "X";
 const playerTwo = "O";
 let playerOneMovedPieces = [];
 let playerTwoMovedPieces = [];
-// let passingPlayer = playerTwo;
 let oldBox;
 
 // initialize the players on the board
@@ -108,14 +107,6 @@ document.addEventListener("click", (e) => {
 
     // checking if the AI mode is active and returning its value
     if (settings.AI) {
-      // console.log(`####################################################`);
-      // console.log(`####################################################`);
-      // console.log(`####################################################`);
-      // console.log(`########### CALLING MINIMAX #############`);
-      // console.log(board);
-      // console.log(`####################################################`);
-      // console.log(`####################################################`);
-      // console.log(`####################################################`);
       let aiRes = optimalMinimax(
         board,
         playerTwo,
@@ -124,29 +115,13 @@ document.addEventListener("click", (e) => {
         settings,
         playerTwoMovedPieces,
         playerOneMovedPieces,
-        6
+        5
       );
-      // console.log(`logging from main - ${aiRes.from}`);
-      // console.log(`logging from main - ${aiRes.to}`);
-      // console.log(board);
-      // console.log(playerOneMovedPieces);
-      // console.log(playerTwoMovedPieces);
-      console.log(board);
       board[aiRes.from] = parseInt(aiRes.from);
       board[aiRes.to] = playerTwo;
       boxes[aiRes.from].innerHTML = "";
       boxes[aiRes.to].innerHTML = playerTwo;
       playerTwoMovedPieces.push(aiRes.from);
-      console.log(playerOneMovedPieces);
-      // console.log(
-      //   playerMovedAllPieces(playerOneMovedPieces, settings.boardSize)
-      // );
-      // console.log(`#####################################`);
-      console.log(playerTwoMovedPieces);
-      // console.log(checkForWin(playerTwo, board, settings.boardSize));
-      // console.log(
-      //   playerMovedAllPieces(playerTwoMovedPieces, settings.boardSize)
-      // );
       if (
         playerMovedAllPieces(
           playerTwo,

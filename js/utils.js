@@ -1,3 +1,4 @@
+// ###########################
 // allowed moves
 export const generateAllowedMoves = (boardSize) => {
   const allowed = {};
