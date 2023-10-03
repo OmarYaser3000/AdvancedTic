@@ -1,41 +1,15 @@
 import "./css/style.css";
+import {
+  generateAllowedMoves,
+  checkForWin,
+  playerMovedAllPieces,
+} from "./js/utils";
+import optimalMinimax from "./js/optimalMinimax";
 
 // game settings
 let settings = {
-  boardSize: 4,
-};
-
-// allowed moves
-const generateAllowedMoves = (boardSize) => {
-  const allowed = {};
-
-  for (let i = 0; i < boardSize * boardSize; i++) {
-    const neighbors = [];
-
-    // Check left neighbor
-    if (i % boardSize !== 0) {
-      neighbors.push(i - 1);
-    }
-
-    // Check right neighbor
-    if (i % boardSize !== boardSize - 1) {
-      neighbors.push(i + 1);
-    }
-
-    // Check top neighbor
-    if (i >= boardSize) {
-      neighbors.push(i - boardSize);
-    }
-
-    // Check bottom neighbor
-    if (i < boardSize * (boardSize - 1)) {
-      neighbors.push(i + boardSize);
-    }
-
-    allowed[i] = neighbors;
-  }
-
-  return allowed;
+  boardSize: 3,
+  AI: true,
 };
 
 // create the html structure
@@ -80,7 +54,7 @@ const playerOne = "X";
 const playerTwo = "O";
 let playerOneMovedPieces = [];
 let playerTwoMovedPieces = [];
-let currentPlayer = playerOne;
+// let passingPlayer = playerTwo;
 let oldBox;
 
 // initialize the players on the board
@@ -93,8 +67,6 @@ for (let i = 0; i < numberOfPieces; i++) {
 }
 
 document.addEventListener("click", (e) => {
-  // const clickedBox = parseInt(e.target.getAttribute("name"));
-
   if (e.target.classList.contains("box") && e.target.innerHTML === playerOne) {
     oldBox = parseInt(e.target.getAttribute("name"));
     // remove the highlights from all boxes
@@ -110,6 +82,7 @@ document.addEventListener("click", (e) => {
     }
   }
 
+  // checking if the player clicked on a valid box and updating the board array and DOM
   if (
     e.target.classList.contains("box") &&
     e.target.innerHTML === "" &&
@@ -125,71 +98,66 @@ document.addEventListener("click", (e) => {
       item.classList.remove("highlighted");
     });
     // check for a winning for the player if he already moved all his pieces
-    if (playerMovedAllPieces(playerOneMovedPieces, settings.boardSize)) {
+    if (
+      playerMovedAllPieces(playerOne, playerOneMovedPieces, settings.boardSize)
+    ) {
       if (checkForWin(playerOne, board, settings.boardSize)) {
-        console.log(`${playerOne} Wins!`);
+        alert(`${playerOne} Wins!`);
+      }
+    }
+
+    // checking if the AI mode is active and returning its value
+    if (settings.AI) {
+      // console.log(`####################################################`);
+      // console.log(`####################################################`);
+      // console.log(`####################################################`);
+      // console.log(`########### CALLING MINIMAX #############`);
+      // console.log(board);
+      // console.log(`####################################################`);
+      // console.log(`####################################################`);
+      // console.log(`####################################################`);
+      let aiRes = optimalMinimax(
+        board,
+        playerTwo,
+        playerOne,
+        playerTwo,
+        settings,
+        playerTwoMovedPieces,
+        playerOneMovedPieces,
+        6
+      );
+      // console.log(`logging from main - ${aiRes.from}`);
+      // console.log(`logging from main - ${aiRes.to}`);
+      // console.log(board);
+      // console.log(playerOneMovedPieces);
+      // console.log(playerTwoMovedPieces);
+      console.log(board);
+      board[aiRes.from] = parseInt(aiRes.from);
+      board[aiRes.to] = playerTwo;
+      boxes[aiRes.from].innerHTML = "";
+      boxes[aiRes.to].innerHTML = playerTwo;
+      playerTwoMovedPieces.push(aiRes.from);
+      console.log(playerOneMovedPieces);
+      // console.log(
+      //   playerMovedAllPieces(playerOneMovedPieces, settings.boardSize)
+      // );
+      // console.log(`#####################################`);
+      console.log(playerTwoMovedPieces);
+      // console.log(checkForWin(playerTwo, board, settings.boardSize));
+      // console.log(
+      //   playerMovedAllPieces(playerTwoMovedPieces, settings.boardSize)
+      // );
+      if (
+        playerMovedAllPieces(
+          playerTwo,
+          playerTwoMovedPieces,
+          settings.boardSize
+        )
+      ) {
+        if (checkForWin(playerTwo, board, settings.boardSize)) {
+          alert(`${playerTwo} Wins!`);
+        }
       }
     }
   }
 });
-
-// ###########################
-// checking for winning states
-function checkForWin(player, board, boardSize) {
-  // Check rows
-  for (let row = 0; row < boardSize; row++) {
-    let rowCount = 0;
-    for (let col = 0; col < boardSize; col++) {
-      if (board[row * boardSize + col] === player) {
-        rowCount++;
-      }
-    }
-    if (rowCount === boardSize) {
-      return true;
-    }
-  }
-  // Check columns
-  for (let col = 0; col < boardSize; col++) {
-    let colCount = 0;
-    for (let row = 0; row < boardSize; row++) {
-      if (board[row * boardSize + col] === player) {
-        colCount++;
-      }
-    }
-    if (colCount === boardSize) {
-      return true;
-    }
-  }
-  // Check diagonals
-  let diagonal1Count = 0;
-  let diagonal2Count = 0;
-  for (let i = 0; i < boardSize; i++) {
-    if (board[i * boardSize + i] === player) {
-      diagonal1Count++;
-    }
-    if (board[i * boardSize + (boardSize - 1 - i)] === player) {
-      diagonal2Count++;
-    }
-  }
-  if (diagonal1Count === boardSize || diagonal2Count === boardSize) {
-    return true;
-  }
-
-  return false;
-}
-
-// checkForWin(playerOne, board, settings.boardSize);
-
-// ########################
-// checking if the player moved all of his pieces
-const playerMovedAllPieces = (playerOneMovedPieces, boardSize) => {
-  let counter = 0;
-  let arr = Array.from({ length: boardSize ** 2 }, (_, index) => {
-    return index;
-  });
-  let requiredBoxes = arr.slice(-boardSize);
-  requiredBoxes.forEach((item) => {
-    if (playerOneMovedPieces.includes(item)) counter++;
-  });
-  if (counter === boardSize) return true;
-};
