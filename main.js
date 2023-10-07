@@ -3,8 +3,12 @@ import {
   generateAllowedMoves,
   checkForWin,
   playerMovedAllPieces,
+  clearGame,
 } from "./js/utils";
 import optimalMinimax from "./js/optimalMinimax";
+
+// testing: why this does not lead to winning?
+// x,1,2,o,o,o,o,7,x,x,x,11,12,13,14,15
 
 // game settings
 let settings = {
@@ -57,13 +61,17 @@ let playerTwoMovedPieces = [];
 let oldBox;
 
 // initialize the players on the board
-let numberOfPieces = settings.boardSize;
-for (let i = 0; i < numberOfPieces; i++) {
-  boxes[i].innerHTML = playerTwo;
-  board[i] = playerTwo;
-  boxes[boxes.length - i - 1].innerHTML = playerOne;
-  board[boxes.length - i - 1] = playerOne;
-}
+const initializePlayers = () => {
+  let numberOfPieces = settings.boardSize;
+  for (let i = 0; i < numberOfPieces; i++) {
+    boxes[i].innerHTML = playerTwo;
+    board[i] = playerTwo;
+    boxes[boxes.length - i - 1].innerHTML = playerOne;
+    board[boxes.length - i - 1] = playerOne;
+  }
+};
+
+initializePlayers();
 
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("box") && e.target.innerHTML === playerOne) {
@@ -102,6 +110,8 @@ document.addEventListener("click", (e) => {
     ) {
       if (checkForWin(playerOne, board, settings.boardSize)) {
         alert(`${playerOne} Wins!`);
+        clearGame(boxes, board, playerOneMovedPieces, playerTwoMovedPieces);
+        initializePlayers();
       }
     }
 
@@ -115,7 +125,7 @@ document.addEventListener("click", (e) => {
         settings,
         playerTwoMovedPieces,
         playerOneMovedPieces,
-        5
+        7
       );
       board[aiRes.from] = parseInt(aiRes.from);
       board[aiRes.to] = playerTwo;
@@ -131,6 +141,8 @@ document.addEventListener("click", (e) => {
       ) {
         if (checkForWin(playerTwo, board, settings.boardSize)) {
           alert(`${playerTwo} Wins!`);
+          clearGame(boxes, board, playerOneMovedPieces, playerTwoMovedPieces);
+          initializePlayers();
         }
       }
     }
