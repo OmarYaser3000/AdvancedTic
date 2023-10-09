@@ -103,8 +103,8 @@ export const clearGame = (
     boxes[i].innerHTML = "";
     board[i] = "";
   }
-  playerOneMovedPieces = [];
-  playerTwoMovedPieces = [];
+  playerOneMovedPieces.length = 0;
+  playerTwoMovedPieces.length = 0;
 };
 
 // ########################

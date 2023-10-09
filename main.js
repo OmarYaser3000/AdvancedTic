@@ -189,6 +189,8 @@ document.addEventListener("click", (e) => {
           alert(`${playerTwo} Wins!`);
           boardContainer.innerHTML = "";
           clearGame(boxes, board, playerOneMovedPieces, playerTwoMovedPieces);
+          console.log(playerOneMovedPieces);
+          console.log(playerTwoMovedPieces);
           initializeBoard();
           initializePlayers();
         }
