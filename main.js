@@ -162,7 +162,7 @@ document.addEventListener("click", (e) => {
     }
 
     // checking if the AI mode is active and returning its value
-    if (settings.AI) {
+    if (settings.AI && playerOneMovedPieces.length >= 1) {
       let aiRes = optimalMinimax(
         board,
         playerTwo,
@@ -189,8 +189,6 @@ document.addEventListener("click", (e) => {
           alert(`${playerTwo} Wins!`);
           boardContainer.innerHTML = "";
           clearGame(boxes, board, playerOneMovedPieces, playerTwoMovedPieces);
-          console.log(playerOneMovedPieces);
-          console.log(playerTwoMovedPieces);
           initializeBoard();
           initializePlayers();
         }
