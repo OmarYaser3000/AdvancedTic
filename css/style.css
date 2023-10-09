@@ -103,6 +103,7 @@
   width: var(--length);
   padding: 0.5rem;
   height: var(--length);
+  transition-duration: 500ms;
 }
 
 .box {

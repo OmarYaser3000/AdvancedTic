@@ -210,7 +210,6 @@ appElement.insertBefore(panelContainer, appElement.firstChild);
 const root = document.documentElement;
 const settingsBtn = document.querySelector(".settings-btn");
 const settingsSection = document.querySelector(".settings-container");
-settingsSection.style.left = "-250px";
 const selects = document.querySelectorAll("select");
 const bg = document.querySelector(".container");
 const boardContainer = document.querySelector(".board");
@@ -299,16 +298,21 @@ selects.forEach((select) => {
 });
 
 // toggle settings and change appearance accordingly
+
+const settingsPanel = document.querySelector(".settings");
+const width = settingsPanel.offsetWidth;
+settingsSection.style.left = `${-width}px`;
+
 settingsBtn.addEventListener("click", () => {
   if (settingsSection.style.left === "0px") {
-    settingsSection.style.left = "-250px";
+    settingsSection.style.left = `${-width}px`;
     if (window.innerWidth > 992) {
-      boardContainer.style.transform = "translateX(-10%)";
+      boardContainer.style.transform = `translateX(${-width / 4}px)`;
     }
-  } else if (settingsSection.style.left === "-250px") {
+  } else if (settingsSection.style.left === `${-width}px`) {
     settingsSection.style.left = "0px";
     if (window.innerWidth > 992) {
-      boardContainer.style.transform = "translateX(50%)";
+      boardContainer.style.transform = `translateX(${width / 2}px)`;
     }
   }
 });
