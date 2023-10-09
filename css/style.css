@@ -1,7 +1,7 @@
-/* :root {
-  --board-col: 3;
-  --length: 300px;
-} */
+:root {
+  --main-color: #e6ef4e;
+  --text-color: #07071d;
+}
 
 * {
   padding: 0;
@@ -10,12 +10,89 @@
   font-family: "Noto Sans", sans-serif;
 }
 
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: color-mix(in oklab, var(--main-color) 60%, white);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--main-color) 60%, black 40%);
+}
+
 .container {
   height: 100dvh;
   background-color: #777;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* settings container */
+.settings-container {
+  position: absolute;
+  height: 100%;
+  width: 300px;
+  transition: 500ms;
+  z-index: 5;
+  left: 0;
+}
+
+.settings-btn {
+  position: absolute;
+  top: 1rem;
+  right: 5px;
+  background-color: var(--main-color);
+  border-radius: 0 1rem 1rem 0;
+  padding: 1rem;
+  border: none;
+}
+
+.settings-btn:hover,
+.settings-btn:active {
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-btn i {
+  color: var(--text-color);
+}
+
+.settings {
+  background-color: var(--main-color);
+  margin-top: auto;
+  position: absolute;
+  height: 100%;
+  padding: 1rem 3rem;
+  transition: 500ms;
+  overflow-y: auto;
+  overflow-x: visible;
+  direction: rtl;
+}
+
+.settings * {
+  direction: ltr;
+}
+
+.settings h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.settings form {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings form select:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .board {

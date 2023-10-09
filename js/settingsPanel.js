@@ -1,5 +1,4 @@
 export const panel = `
-<div class="settings-container">
         <button class="settings-btn">
           <i class="fa-solid fa-gear"></i>
         </button>
@@ -14,8 +13,8 @@ export const panel = `
             <label for="opponent">Play Against:</label>
             <select name="opponent" id="opponent">
               <option value="comp">Computer</option>
-              <option value="local">local</option>
-              <option value="online">online</option>
+              <option value="local">Local</option>
+              <option value="online">Online</option>
             </select>
             <label for="compLevel">Computer Difficulty:</label>
             <select name="compLevel" id="compLevel">
@@ -31,8 +30,8 @@ export const panel = `
             </select>
             <label for="boardSize">Board Size:</label>
             <select name="boardSize" id="size">
-              <option value="3x3">3x3</option>
-              <option value="4x4">4x4</option>
+              <option value="3">3x3</option>
+              <option value="4">4x4</option>
             </select>
             <label for="theme">Game Theme:</label>
             <select name="theme" id="theme">
@@ -45,5 +44,4 @@ export const panel = `
             </select>
           </form>
         </div>
-      </div>
 `;
