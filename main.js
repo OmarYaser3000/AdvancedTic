@@ -100,6 +100,8 @@ initializeBoard();
 // initialize the variables
 const playerOne = "X";
 const playerTwo = "O";
+let currentPlayer = playerOne;
+let playerToMove = playerOne;
 let playerOneMovedPieces = [];
 let playerTwoMovedPieces = [];
 let oldBox;
@@ -118,7 +120,12 @@ const initializePlayers = () => {
 initializePlayers();
 
 document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("box") && e.target.innerHTML === playerOne) {
+  if (
+    e.target.classList.contains("box") &&
+    e.target.innerHTML === playerOne &&
+    playerToMove === playerOne
+  ) {
+    currentPlayer = playerOne;
     oldBox = parseInt(e.target.getAttribute("name"));
     // remove the highlights from all boxes
     boxes.forEach((item) => {
@@ -133,27 +140,64 @@ document.addEventListener("click", (e) => {
     }
   }
 
+  // player two in local play
+  if (
+    e.target.classList.contains("box") &&
+    e.target.innerHTML === playerTwo &&
+    !settings.AI &&
+    playerToMove === playerTwo
+  ) {
+    currentPlayer = playerTwo;
+    oldBox = parseInt(e.target.getAttribute("name"));
+    // remove the highlights from all boxes
+    boxes.forEach((item) => {
+      item.classList.remove("highlighted");
+    });
+    // highlight the available moves to the selected piece
+    let allowedList = allowedMoves[parseInt(e.target.getAttribute("name"))];
+    for (let i = 0; i < allowedList.length; i++) {
+      if (boxes[allowedList[i]].innerHTML === "") {
+        boxes[allowedList[i]].classList.add("highlighted");
+      }
+    }
+    // check for a winning for the player if he already moved all his pieces
+    if (
+      playerMovedAllPieces(playerTwo, playerTwoMovedPieces, settings.boardSize)
+    ) {
+      if (checkForWin(playerTwo, board, settings.boardSize)) {
+        alert(`${playerTwo} Wins!`);
+        boardContainer.innerHTML = "";
+        clearGame(boxes, board, playerOneMovedPieces, playerTwoMovedPieces);
+        initializeBoard();
+        initializePlayers();
+      }
+    }
+  }
+
   // checking if the player clicked on a valid box and updating the board array and DOM
   if (
     e.target.classList.contains("box") &&
     e.target.innerHTML === "" &&
     e.target.classList.contains("highlighted")
   ) {
-    e.target.innerHTML = playerOne;
-    board[parseInt(e.target.getAttribute("name"))] = playerOne;
+    e.target.innerHTML = currentPlayer;
+    board[parseInt(e.target.getAttribute("name"))] = currentPlayer;
     board[oldBox] = oldBox;
     boxes[oldBox].innerHTML = "";
-    playerOneMovedPieces.push(oldBox);
+    let playerMovedPieces =
+      currentPlayer === playerOne ? playerOneMovedPieces : playerTwoMovedPieces;
+    playerMovedPieces.push(oldBox);
     // remove the highlights from all boxes
     boxes.forEach((item) => {
       item.classList.remove("highlighted");
     });
+    playerToMove = playerToMove === playerOne ? playerTwo : playerOne;
     // check for a winning for the player if he already moved all his pieces
     if (
-      playerMovedAllPieces(playerOne, playerOneMovedPieces, settings.boardSize)
+      playerMovedAllPieces(currentPlayer, playerMovedPieces, settings.boardSize)
     ) {
-      if (checkForWin(playerOne, board, settings.boardSize)) {
-        alert(`${playerOne} Wins!`);
+      if (checkForWin(currentPlayer, board, settings.boardSize)) {
+        alert(`${currentPlayer} Wins!`);
         boardContainer.innerHTML = "";
         clearGame(boxes, board, playerOneMovedPieces, playerTwoMovedPieces);
         initializeBoard();
@@ -193,6 +237,8 @@ document.addEventListener("click", (e) => {
           initializePlayers();
         }
       }
+
+      playerToMove = playerOne;
     }
   }
 });
@@ -291,9 +337,7 @@ selects.forEach((select) => {
     initializeBoard();
     adjustTheme();
     initializePlayers();
-    // if (e.target.getAttribute("name") === "opponent") {
-    //   settings.AI = !settings.AI;
-    // }
+    playerToMove = playerOne;
   });
 });
 
