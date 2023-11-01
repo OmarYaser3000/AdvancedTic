@@ -33,6 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: contain;
 }
 
 /* settings container */
@@ -84,19 +85,34 @@
 .settings h2 {
   margin-bottom: 2rem;
   text-align: center;
+  color: var(--text-color);
 }
 
 .settings form {
   display: flex;
   flex-direction: column;
+  color: var(--text-color);
+}
+
+.settings form select {
+  background-color: color-mix(in oklab, var(--main-color) 60%, white);
+  color: color-mix(in oklab, var(--text-color), black 80%);
+  font-weight: 600;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .settings form select:not(:last-child) {
   margin-bottom: 1rem;
 }
 
+.settings form label {
+  margin-bottom: 0.5rem;
+}
+
 .board {
-  background-color: blueviolet;
+  background-color: color-mix(in oklab, var(--text-color), black 60%);
   display: grid;
   grid-template-columns: repeat(var(--board-col), 1fr);
   grid-template-rows: repeat(var(--board-col), 1fr);
@@ -107,7 +123,8 @@
 }
 
 .box {
-  background-color: aqua;
+  background-color: color-mix(in oklab, var(--text-color) 80%, white);
+  color: color-mix(in oklab, var(--text-color), black 60%);
   padding: 1rem;
   margin: 0.25rem;
   display: flex;
@@ -120,5 +137,5 @@
 }
 
 .highlighted {
-  background-color: #fff;
+  background-color: color-mix(in oklab, var(--main-color), white 40%);
 }

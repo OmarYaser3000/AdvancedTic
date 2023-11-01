@@ -35,13 +35,13 @@ export const panel = `
             </select>
             <label for="theme">Game Theme:</label>
             <select name="theme" id="theme">
-              <option value="theme01">Theme 01</option>
-              <option value="theme02">Theme 02</option>
-              <option value="theme03">Theme 03</option>
-              <option value="theme04">Theme 04</option>
-              <option value="theme05">Theme 05</option>
-              <option value="theme06">Theme 06</option>
-            </select>
-          </form>
-        </div>
-`;
+              <option value="theme01">Halloween Theme</option>
+              <option value="theme02">Purple Theme</option>
+              <option value="theme03">Green Theme</option>
+              </select>
+              </form>
+              </div>
+              `;
+// <option value="theme04">Theme 04</option>
+// <option value="theme05">Theme 05</option>
+// <option value="theme06">Theme 06</option>

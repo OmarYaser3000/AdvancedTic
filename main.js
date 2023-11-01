@@ -17,35 +17,35 @@ import { panel } from "./js/settingsPanel";
 // themes
 const themes = {
   theme01: {
-    image: "./images/01.webp",
-    textColor: "#e6ef4e",
-    color: "#4341be",
+    image: "./images/halloween-bg.webp",
+    textColor: "#2d42df",
+    color: "#1B0D04",
   },
   theme02: {
-    image: "./images/02.webp",
-    textColor: "#e6ef4e",
-    color: "#4341be",
+    image: "./images/purple.webp",
+    textColor: "#0d0d2b",
+    color: "#a453a1",
   },
   theme03: {
-    image: "./images/03.webp",
-    textColor: "#e6ef4e",
-    color: "#06042f",
+    image: "./images/green.webp",
+    textColor: "#F4C6B8",
+    color: "#0d261a",
   },
-  theme04: {
-    image: "./images/04.webp",
-    textColor: "#07071d",
-    color: "#4341be",
-  },
-  theme05: {
-    image: "./images/05.webp",
-    textColor: "#07071d",
-    color: "#4341be",
-  },
-  theme06: {
-    image: "./images/06.webp",
-    textColor: "#e6ef4e",
-    color: "#06042f",
-  },
+  // theme04: {
+  //   image: "./images/04.webp",
+  //   textColor: "#07071d",
+  //   color: "#4341be",
+  // },
+  // theme05: {
+  //   image: "./images/05.webp",
+  //   textColor: "#07071d",
+  //   color: "#4341be",
+  // },
+  // theme06: {
+  //   image: "./images/06.webp",
+  //   textColor: "#e6ef4e",
+  //   color: "#06042f",
+  // },
 };
 
 // game settings
