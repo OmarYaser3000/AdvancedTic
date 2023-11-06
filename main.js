@@ -10,6 +10,7 @@ import {
 } from "./js/utils";
 import optimalMinimax from "./js/optimalMinimax";
 import { panel } from "./js/settingsPanel";
+import { tutorial } from "./js/popUps";
 
 // testing: why this does not lead to winning?
 // x,1,2,o,o,o,o,7,x,x,x,11,12,13,14,15
@@ -20,16 +21,19 @@ const themes = {
     image: "./images/halloween-bg.webp",
     textColor: "#2d42df",
     color: "#1B0D04",
+    gradient: `radial-gradient(circle, #f57d08 0%, #aa4a10 98%)`,
   },
   theme02: {
     image: "./images/purple.webp",
     textColor: "#0d0d2b",
     color: "#a453a1",
+    gradient: `radial-gradient(circle, #9d5ead 0%, #502d59 98%)`,
   },
   theme03: {
     image: "./images/green.webp",
     textColor: "#F4C6B8",
     color: "#0d261a",
+    gradient: `radial-gradient(circle, #1eb66f 0%, #184932 98%)`,
   },
   // theme04: {
   //   image: "./images/04.webp",
@@ -252,6 +256,28 @@ panelContainer.innerHTML = panel;
 
 appElement.insertBefore(panelContainer, appElement.firstChild);
 
+// add popups to the game
+const tutorialPopup = document.createElement("div");
+tutorialPopup.id = "tutorial";
+tutorialPopup.classList.add("popup");
+tutorialPopup.classList.add("tutorial");
+tutorialPopup.innerHTML = tutorial;
+appElement.append(tutorialPopup);
+
+// add popup button actions
+const tutorialBtn = document.querySelector(".tutorial-btn");
+const tutorialPopupId = document.getElementById("tutorial");
+
+tutorialBtn.addEventListener("click", () => {
+  const tutorialContent = document.querySelector(".tutorial-content");
+  tutorialPopupId.style.animationName = "popupDisappear";
+  tutorialPopupId.style.animationDuration = ".5s";
+
+  tutorialPopupId.addEventListener("animationend", () => {
+    tutorialPopupId.style.display = "none";
+  });
+});
+
 // importing dom elements
 const root = document.documentElement;
 const settingsBtn = document.querySelector(".settings-btn");
@@ -259,6 +285,7 @@ const settingsSection = document.querySelector(".settings-container");
 const selects = document.querySelectorAll("select");
 const bg = document.querySelector(".container");
 const boardContainer = document.querySelector(".board");
+const tutorialContent = document.querySelector(".tutorial-content");
 
 // adjusting game theme
 const adjustTheme = () => {
@@ -266,6 +293,7 @@ const adjustTheme = () => {
   bg.style.backgroundImage = `url(${themes[currentTheme].image})`;
   root.style.setProperty("--main-color", themes[currentTheme].color);
   root.style.setProperty("--text-color", themes[currentTheme].textColor);
+  tutorialContent.style.background = `${themes[currentTheme].gradient}`;
 };
 
 // set the settings to and from local storage
@@ -283,6 +311,7 @@ if (localStorage.getItem("firstOpen") === null) {
     }
     localStorage.setItem(item, settings[item]);
   });
+  tutorialPopup.classList.toggle("popup");
   localStorage.setItem("firstOpen", 1);
   adjustTheme();
   initializePlayers();
